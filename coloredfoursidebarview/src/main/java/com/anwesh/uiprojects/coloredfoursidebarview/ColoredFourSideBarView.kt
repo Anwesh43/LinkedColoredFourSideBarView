@@ -209,4 +209,13 @@ class ColoredFourSideBarView(ctx : Context) : View(ctx) {
             }
         }
     }
+
+    companion object {
+
+        fun create(activity : Activity) : ColoredFourSideBarView {
+            val view : ColoredFourSideBarView = ColoredFourSideBarView(activity)
+            activity.setContentView(view)
+            return view
+        }
+    }
 }
