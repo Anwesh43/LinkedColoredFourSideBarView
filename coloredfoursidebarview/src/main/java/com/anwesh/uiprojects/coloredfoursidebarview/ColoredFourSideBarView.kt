@@ -184,4 +184,27 @@ class ColoredFourSideBarView(ctx : Context) : View(ctx) {
             curr.startUpdating(cb)
         }
     }
+
+    data class Renderer(var view : ColoredFourSideBarView) {
+
+        private val animator : Animator = Animator(view)
+        private val cfsb : ColoredFourSideBar = ColoredFourSideBar(0)
+        private val paint : Paint = Paint(Paint.ANTI_ALIAS_FLAG)
+
+        fun render(canvas : Canvas) {
+            canvas.drawColor(backColor)
+            cfsb.draw(canvas, paint)
+            animator.animate {
+                cfsb.update {
+                    animator.stop()
+                }
+            }
+        }
+
+        fun handleTap() {
+            cfsb.startUpdating {
+                animator.start()
+            }
+        }
+    }
 }
