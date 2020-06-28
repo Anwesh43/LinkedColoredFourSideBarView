@@ -24,3 +24,36 @@ fun Int.inverse() : Float = 1f / this
 fun Float.maxScale(i : Int, n : Int) : Float = Math.max(0f, this - i * n.inverse())
 fun Float.divideScale(i : Int, n : Int) : Float = Math.min(n.inverse(), maxScale(i, n)) * n
 fun Float.sinify() : Float = Math.sin(this * Math.PI).toFloat()
+
+fun Canvas.drawColoredFourSidedBar(scale : Float, w : Float, h : Float, paint : Paint) {
+    val sf : Float = scale.sinify()
+    val hSize : Float = h / sizeFactor
+    val wSize : Float = w / sizeFactor
+    for (j in 0..(parts - 1)) {
+        val sfj : Float = sf.divideScale(j * 2, parts * parts + 1)
+        save()
+        translate(0f, h / 2)
+        scale(1f, 1f - 2 * j)
+        drawRect(RectF(-wSize / 2, -hSize * sfj, wSize / 2, 0f), paint)
+        restore()
+    }
+
+    for (j in 0..(parts - 1)) {
+        val sfj : Float = sf.divideScale(1 + 2 * j, parts * parts + 1)
+        save()
+        translate(-w / 2, 0f)
+        scale(1f - 2 * j, 1f)
+        drawRect(RectF(0f, -hSize / 2, wSize * sfj, hSize / 2), paint)
+        restore()
+    }
+}
+
+fun Canvas.drawCFSBNode(i : Int, scale : Float, paint : Paint) {
+    val w : Float = width.toFloat()
+    val h : Float = height.toFloat()
+    paint.color = Color.parseColor(colors[i])
+    save()
+    translate(w / 2, h / 2)
+    drawColoredFourSidedBar(scale, w, h, paint)
+    restore()
+}
