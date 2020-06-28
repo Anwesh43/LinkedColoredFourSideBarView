@@ -14,7 +14,7 @@ import android.app.Activity
 import android.content.Context
 
 val colors : Array<String> = arrayOf("#F44336", "#4CAF50", "#2196F3", "#009688", "#3F51B5")
-val sizeFactor : Float = 3f
+val sizeFactor : Float = 4.8f
 val backColor : Int = Color.parseColor("#BDBDBD")
 val delay : Long = 20
 val parts : Int = 2
@@ -32,8 +32,8 @@ fun Canvas.drawColoredFourSidedBar(scale : Float, w : Float, h : Float, paint : 
     for (j in 0..(parts - 1)) {
         val sfj : Float = sf.divideScale(j * 2, parts * parts + 1)
         save()
-        translate(0f, h / 2)
         scale(1f, 1f - 2 * j)
+        translate(0f, h / 2)
         drawRect(RectF(-wSize / 2, -hSize * sfj, wSize / 2, 0f), paint)
         restore()
     }
@@ -41,8 +41,8 @@ fun Canvas.drawColoredFourSidedBar(scale : Float, w : Float, h : Float, paint : 
     for (j in 0..(parts - 1)) {
         val sfj : Float = sf.divideScale(1 + 2 * j, parts * parts + 1)
         save()
-        translate(-w / 2, 0f)
         scale(1f - 2 * j, 1f)
+        translate(-w / 2, 0f)
         drawRect(RectF(0f, -hSize / 2, wSize * sfj, hSize / 2), paint)
         restore()
     }
